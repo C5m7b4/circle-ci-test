@@ -21,14 +21,14 @@ jobs:
           command: |
             ls -la
             echo '^^^ This should look familiar'
-  Run-With-Node:
+  Run-Tests-With-Node:
     docker:
       - image: circleci/node:10-browsers
     steps:
       - run:
-          name: running in a container
+          name: install and run tests
           command: |
-            node -v
+            npm install && npm test
   Now-Complete:
     docker:
       - image: alpine:3.7
@@ -45,7 +45,7 @@ workflows:
       - I-Have-Code:
           requires:
             - Hello-World
-      - Run-With-Node:
+      - Run-Tests-With-Node:
           requires:
             - Hello-World
       - Hold-For-Approval:
