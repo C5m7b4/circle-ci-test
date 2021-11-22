@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Code has arrived
           command: |
-            ls-la
+            ls -la
             echo '^^^ This should look familiar'
   Run-With-Node:
     docker:
