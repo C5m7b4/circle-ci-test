@@ -2,18 +2,57 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 jobs:
-  build:
+  Hello-World:
     docker:
       - image: alpine:3.7
     steps:
-      - checkout
       - run:
-          name: The first Step
+          name: Hello World
           command: |
             echo 'Hello World'
             echo 'This us the delivery pipeline'
+  I-Have-Code:
+    docker:
+      - image: alpine: 3.7
+    steps:
+      - checkout
       - run:
-          name: Code has arrived
-          command: |
-            ls -al
-            echo '^^^ This should look famimiliar'
+        name: Code has arrived
+        command: |
+          ls-la
+          echo '^^^ This should look familiar'
+  Run-With-Node:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - run:
+        name: running in a container
+        command: |
+          node -v
+  Now-Complete:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+        name: Approval Complete
+        command: |
+          echo 'Do work once the approval has completed'
+workflows:
+  version: 2
+  Example_Workflow:
+    jobs:
+      - Hello-World
+      - I-Have-Code:
+        requires: 
+          - Hello-World
+      - Run-With-Node:
+        requires:
+          - Hello-World
+      - Hold-For-Approval:
+        type: approval
+        requires:
+          - Run-With-Node
+          - I-Have-Code
+      - Now-Complete:
+        requires:
+          - Hold-For-Approval
