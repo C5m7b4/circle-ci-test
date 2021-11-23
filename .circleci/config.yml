@@ -33,7 +33,7 @@ jobs:
           command: |
             npm install && npm test
       - codecov/upload:
-          file: ''./coverage/clover.xml'
+          file: "./coverage/clover.xml"
           token: a680f0ba-8395-4318-81c6-bd95abc94a5d
   Now-Complete:
     docker:
