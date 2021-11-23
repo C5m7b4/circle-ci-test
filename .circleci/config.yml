@@ -1,6 +1,8 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
+orba:
+  codecov: codecov/codecov@1.0.2
 jobs:
   Hello-World:
     docker:
@@ -15,6 +17,7 @@ jobs:
     docker:
       - image: alpine:3.7
     steps:
+      - checkout
       - run:
           name: Code has arrived
           command: |
@@ -29,6 +32,9 @@ jobs:
           name: install and run tests
           command: |
             npm install && npm test
+      - codecov/upload:
+          file: ''./coverage/clover.xml'
+          token: a680f0ba-8395-4318-81c6-bd95abc94a5d
   Now-Complete:
     docker:
       - image: alpine:3.7
